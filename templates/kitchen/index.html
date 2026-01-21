@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Kitchen dashboard</h1>
+
+<div class="row g-3">
+  <div class="col-md-4">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">Cooks</h5>
+        <p class="display-6">{{ num_cooks }}</p>
+        <a class="btn btn-sm btn-primary" href="{% url 'kitchen:cook-list' %}">Open</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">Dishes</h5>
+        <p class="display-6">{{ num_dishes }}</p>
+        <a class="btn btn-sm btn-primary" href="{% url 'kitchen:dish-list' %}">Open</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h5 class="card-title">Dish types</h5>
+        <p class="display-6">{{ num_dish_types }}</p>
+        <a class="btn btn-sm btn-primary" href="{% url 'kitchen:dishtype-list' %}">Open</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
