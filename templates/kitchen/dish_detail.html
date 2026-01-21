@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Dish{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-3">
+  <h1 class="h3 mb-0">{{ dish.name }}</h1>
+  <div>
+    <a class="btn btn-outline-primary" href="{% url 'kitchen:dish-update' dish.id %}">Edit</a>
+    <a class="btn btn-outline-danger" href="{% url 'kitchen:dish-delete' dish.id %}">Delete</a>
+  </div>
+</div>
+
+<div class="row g-3">
+  <div class="col-lg-8">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <p class="mb-1"><strong>Type:</strong> {{ dish.dish_type.name }}</p>
+        <p class="mb-1"><strong>Price:</strong> {{ dish.price }}</p>
+        <hr>
+        <p class="mb-0">{{ dish.description|linebreaksbr }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-4">
+    <div class="card shadow-sm mb-3">
+      <div class="card-body">
+        <h2 class="h6">Responsible cooks</h2>
+        <ul class="mb-0">
+          {% for cook in dish.cooks.all %}
+            <li><a href="{% url 'kitchen:cook-detail' cook.id %}">{{ cook }}</a></li>
+          {% empty %}
+            <li>No cooks assigned.</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h2 class="h6">Ingredients</h2>
+        <ul class="mb-0">
+          {% for ing in dish.ingredients.all %}
+            <li>{{ ing.name }}</li>
+          {% empty %}
+            <li>No ingredients.</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
