@@ -52,3 +52,9 @@ class DishTypeForm(forms.ModelForm):
     class Meta:
         model = DishType
         fields = ["name"]
+
+
+class IngredientForm(forms.ModelForm):
+    class Meta:
+        model = Ingredient
+        fields = ["name"]
