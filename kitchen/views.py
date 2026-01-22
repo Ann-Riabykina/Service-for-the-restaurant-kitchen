@@ -10,8 +10,14 @@ from .forms import (
     CookCreationForm,
     CookUpdateForm,
     DishTypeForm,
+    IngredientForm,
 )
-from .models import Cook, Dish, DishType
+from .models import (
+    Cook,
+    Dish,
+    DishType,
+    Ingredient,
+)
 
 
 @login_required
@@ -154,3 +160,43 @@ class CookDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Cook
     template_name = "kitchen/confirm_delete.html"
     success_url = reverse_lazy("kitchen:cook-list")
+    
+    
+class IngredientListView(LoginRequiredMixin, generic.ListView):
+    model = Ingredient
+    paginate_by = 10
+    template_name = "kitchen/ingredient_list.html"
+    context_object_name = "ingredient_list"
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        search = self.request.GET.get("search")
+        if search:
+            queryset = queryset.filter(name__icontains=search)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["search"] = self.request.GET.get("search", "")
+        context["form"] = SearchForm(initial={"search": context["search"]})
+        return context
+
+
+class IngredientCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Ingredient
+    form_class = IngredientForm
+    success_url = reverse_lazy("kitchen:ingredient-list")
+    template_name = "kitchen/form.html"
+
+
+class IngredientUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Ingredient
+    form_class = IngredientForm
+    success_url = reverse_lazy("kitchen:ingredient-list")
+    template_name = "kitchen/form.html"
+
+
+class IngredientDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Ingredient
+    success_url = reverse_lazy("kitchen:ingredient-list")
+    template_name = "kitchen/confirm_delete.html"
