@@ -80,14 +80,24 @@ class DishListView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         queryset = super().get_queryset()
         search = self.request.GET.get("search")
+        dish_type_id = self.request.GET.get("dish_type")
+        cook_id = self.request.GET.get("cook")
         if search:
             queryset = queryset.filter(name__icontains=search)
-        return queryset
+        if dish_type_id:
+            queryset = queryset.filter(dish_type_id=dish_type_id)
+        if cook_id:
+            queryset = queryset.filter(cooks__id=cook_id)
+        return queryset.distinct()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["search"] = self.request.GET.get("search", "")
+        context["dish_type"] = self.request.GET.get("dish_type", "")
+        context["cook"] = self.request.GET.get("cook", "")
         context["form"] = SearchForm(initial={"search": context["search"]})
+        context["dish_types"] = DishType.objects.all()
+        context["cooks"] = Cook.objects.all()
         return context
 
 
