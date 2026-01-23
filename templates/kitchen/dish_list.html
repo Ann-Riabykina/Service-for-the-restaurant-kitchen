@@ -8,7 +8,40 @@
 </div>
 
 <form method="get" class="mb-3">
-  {{ form.search }}
+  <div class="row g-2">
+    <div class="col-md-4">
+      {{ form.search }}
+    </div>
+
+    <div class="col-md-3">
+      <select name="dish_type" class="form-select">
+        <option value="">All dish types</option>
+        {% for t in dish_types %}
+          <option value="{{ t.id }}" 
+                  {% if dish_type_id == t.id %}selected{% endif %}>
+            {{ t.name }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="col-md-3">
+      <select name="cook" class="form-select">
+        <option value="">All cooks</option>
+        {% for c in cooks %}
+          <option value="{{ c.id }}" 
+                  {% if cook_id == c.id %}selected{% endif %}>
+              selected{% endif %}>
+            {{ c.username }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="col-md-2 d-grid">
+      <button class="btn btn-outline-primary" type="submit">Filter</button>
+    </div>
+  </div>
 </form>
 
 <div class="card shadow-sm">
