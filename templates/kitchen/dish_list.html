@@ -31,7 +31,6 @@
         {% for c in cooks %}
           <option value="{{ c.id }}" 
                   {% if cook_id == c.id %}selected{% endif %}>
-              selected{% endif %}>
             {{ c.username }}
           </option>
         {% endfor %}

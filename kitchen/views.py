@@ -93,8 +93,12 @@ class DishListView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["search"] = self.request.GET.get("search", "")
-        context["dish_type"] = self.request.GET.get("dish_type", "")
-        context["cook"] = self.request.GET.get("cook", "")
+        dish_type_raw = self.request.GET.get("dish_type")
+        cook_raw = self.request.GET.get("cook")
+        context["dish_type_id"] = int(
+            dish_type_raw) if dish_type_raw and dish_type_raw.isdigit() else None
+        context["cook_id"] = int(
+            cook_raw) if cook_raw and cook_raw.isdigit() else None
         context["form"] = SearchForm(initial={"search": context["search"]})
         context["dish_types"] = DishType.objects.all()
         context["cooks"] = Cook.objects.all()
