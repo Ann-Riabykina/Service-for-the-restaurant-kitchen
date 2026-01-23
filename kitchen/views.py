@@ -20,6 +20,15 @@ from .models import (
 )
 
 
+class QueryStringMixin:
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        params = self.request.GET.copy()
+        params.pop("page", None)
+        context["querystring"] = params.urlencode()
+        return context
+
+
 @login_required
 def index(request):
     context = {
@@ -30,7 +39,7 @@ def index(request):
     return render(request, "kitchen/index.html", context)
 
 
-class DishTypeListView(LoginRequiredMixin, generic.ListView):
+class DishTypeListView(LoginRequiredMixin, QueryStringMixin, generic.ListView):
     model = DishType
     paginate_by = 10
     template_name = "kitchen/dishtype_list.html"
@@ -70,7 +79,7 @@ class DishTypeDeleteView(LoginRequiredMixin, generic.DeleteView):
     template_name = "kitchen/confirm_delete.html"
 
 
-class DishListView(LoginRequiredMixin, generic.ListView):
+class DishListView(LoginRequiredMixin, QueryStringMixin, generic.ListView):
     model = Dish
     paginate_by = 10
     template_name = "kitchen/dish_list.html"
@@ -131,7 +140,7 @@ class DishDeleteView(LoginRequiredMixin, generic.DeleteView):
     template_name = "kitchen/confirm_delete.html"
 
 
-class CookListView(LoginRequiredMixin, generic.ListView):
+class CookListView(LoginRequiredMixin, QueryStringMixin, generic.ListView):
     model = Cook
     paginate_by = 10
     template_name = "kitchen/cook_list.html"
@@ -176,7 +185,7 @@ class CookDeleteView(LoginRequiredMixin, generic.DeleteView):
     success_url = reverse_lazy("kitchen:cook-list")
     
     
-class IngredientListView(LoginRequiredMixin, generic.ListView):
+class IngredientListView(LoginRequiredMixin, QueryStringMixin, generic.ListView):
     model = Ingredient
     paginate_by = 10
     template_name = "kitchen/ingredient_list.html"
