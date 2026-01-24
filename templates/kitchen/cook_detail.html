@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Cook{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-3">
+  <h1 class="h3 mb-0">{{ cook.username }}</h1>
+  <div>
+    <a class="btn btn-outline-primary" href="{% url 'kitchen:cook-update' cook.id %}">Edit</a>
+    <a class="btn btn-outline-danger" href="{% url 'kitchen:cook-delete' cook.id %}">Delete</a>
+  </div>
+</div>
+
+<div class="card shadow-sm mb-3">
+  <div class="card-body">
+    <p class="mb-1"><strong>Name:</strong> {{ cook.first_name }} {{ cook.last_name }}</p>
+    <p class="mb-1"><strong>Email:</strong> {{ cook.email }}</p>
+    <p class="mb-0"><strong>Experience:</strong> {{ cook.years_of_experience }} years</p>
+  </div>
+</div>
+
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h2 class="h6">Dishes assigned</h2>
+    <ul class="mb-0">
+      {% for dish in cook.dishes.all %}
+        <li><a href="{% url 'kitchen:dish-detail' dish.id %}">{{ dish.name }}</a> ({{ dish.dish_type.name }})</li>
+      {% empty %}
+        <li>No dishes assigned.</li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card shadow-sm">
+  <div class="card-body">
+    <h1 class="h4">Confirm delete</h1>
+    <p class="mb-4">Are you sure you want to delete <strong>{{ object }}</strong>?</p>
+
+    <form method="post">
+      {% csrf_token %}
+      <button class="btn btn-danger" type="submit">Yes, delete</button>
+      <a class="btn btn-outline-secondary" href="{{ request.META.HTTP_REFERER|default:'/' }}">Cancel</a>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Ingredients{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-3">
+  <h1 class="h3 mb-0">Ingredients</h1>
+  <a class="btn btn-primary" href="{% url 'kitchen:ingredient-create' %}">Create ingredient</a>
+</div>
+
+<form method="get" class="mb-3">
+  {{ form.search }}
+</form>
+
+<div class="card shadow-sm">
+  <div class="table-responsive">
+    <table class="table table-striped mb-0">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th class="text-end"></th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for ing in ingredient_list %}
+        <tr>
+          <td>{{ ing.name }}</td>
+          <td class="text-end">
+            <a class="btn btn-sm btn-outline-primary" href="{% url 'kitchen:ingredient-update' ing.id %}">Edit</a>
+            <a class="btn btn-sm btn-outline-danger" href="{% url 'kitchen:ingredient-delete' ing.id %}">Delete</a>
+          </td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="2" class="text-center p-4">No ingredients yet.</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

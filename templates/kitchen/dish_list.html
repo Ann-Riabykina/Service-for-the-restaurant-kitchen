@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}Dishes{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-3">
+  <h1 class="h3 mb-0">Dishes</h1>
+  <a class="btn btn-primary" href="{% url 'kitchen:dish-create' %}">Create dish</a>
+</div>
+
+<form method="get" class="mb-3">
+  <div class="row g-2">
+    <div class="col-md-4">
+      {{ form.search }}
+    </div>
+
+    <div class="col-md-3">
+      <select name="dish_type" class="form-select">
+        <option value="">All dish types</option>
+        {% for t in dish_types %}
+          <option value="{{ t.id }}" 
+                  {% if dish_type_id == t.id %}selected{% endif %}>
+            {{ t.name }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="col-md-3">
+      <select name="cook" class="form-select">
+        <option value="">All cooks</option>
+        {% for c in cooks %}
+          <option value="{{ c.id }}" 
+                  {% if cook_id == c.id %}selected{% endif %}>
+            {{ c.username }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="col-md-2 d-grid">
+      <button class="btn btn-outline-primary" type="submit">Filter</button>
+    </div>
+  </div>
+</form>
+
+<div class="card shadow-sm">
+  <div class="table-responsive">
+    <table class="table table-striped mb-0">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th class="text-end">Price</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      {% for dish in dish_list %}
+        <tr>
+          <td><a href="{% url 'kitchen:dish-detail' dish.id %}">{{ dish.name }}</a></td>
+          <td>{{ dish.dish_type.name }}</td>
+          <td class="text-end">{{ dish.price }}</td>
+          <td class="text-end">
+            <a class="btn btn-sm btn-outline-primary" href="{% url 'kitchen:dish-update' dish.id %}">Edit</a>
+            <a class="btn btn-sm btn-outline-danger" href="{% url 'kitchen:dish-delete' dish.id %}">Delete</a>
+          </td>
+        </tr>
+      {% empty %}
+        <tr><td colspan="4" class="text-center p-4">No dishes yet.</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

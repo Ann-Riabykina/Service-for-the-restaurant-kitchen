@@ -1,0 +1,12 @@
+<div class="list-group">
+  <a class="list-group-item list-group-item-action" href="{% url 'kitchen:index' %}">Dashboard</a>
+  <a class="list-group-item list-group-item-action" href="{% url 'kitchen:dish-list' %}">Dishes</a>
+  <a class="list-group-item list-group-item-action" href="{% url 'kitchen:dishtype-list' %}">Dish types</a>
+  <a class="list-group-item list-group-item-action" href="{% url 'kitchen:cook-list' %}">Cooks</a>
+  <a class="list-group-item list-group-item-action" href="{% url 'kitchen:ingredient-list' %}">Ingredients</a>
+  <form method="post" action="{% url 'logout' %}" class="list-group-item">
+    {% csrf_token %}
+    <input type="hidden" name="next" value="{{ request.path }}">
+    <button class="btn btn-link p-0 text-decoration-none" type="submit">Logout</button>
+  </form>
+</div>
