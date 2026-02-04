@@ -127,3 +127,22 @@ You can manage all models there:
 - SQLite is used for simplicity
 - UI is built with Bootstrap 5
 - This project is intended for educational purposes
+
+## Live Demo (Render)
+
+The project is deployed on Render and available at:
+```bash
+https://service-for-the-restaurant-kitchen-94bf.onrender.com
+```
+
+## Authentication
+
+Most pages require authentication.
+
+You can:
+- register a new cook via Sign up
+- or log in via Login
+
+login: admin
+
+password: 123qwe456rty
