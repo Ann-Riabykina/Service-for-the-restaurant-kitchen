@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Cook{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-between mb-3">
+  <h1 class="h3 mb-0">{{ object.username }}</h1>
+  <a class="btn btn-outline-primary" href="{% url 'accounts:cook-update' object.id %}">Edit</a>
+</div>
+
+<div class="card shadow-sm">
+  <div class="card-body">
+    <p class="mb-1"><strong>Name:</strong> {{ object.first_name }} {{ object.last_name }}</p>
+    <p class="mb-1"><strong>Email:</strong> {{ object.email }}</p>
+    <p class="mb-0"><strong>Experience:</strong> {{ object.years_of_experience }} years</p>
+  </div>
+</div>
+
+<div class="card shadow-sm mt-3">
+  <div class="card-body">
+    <h2 class="h6">Dishes assigned</h2>
+    <ul class="mb-0">
+      {% for dish in object.dishes.all %}
+        <li><a href="{% url 'kitchen:dish-detail' dish.id %}">{{ dish.name }}</a> ({{ dish.dish_type.name }})</li>
+      {% empty %}
+        <li>No dishes assigned.</li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endblock %}

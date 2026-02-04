@@ -1,15 +1,11 @@
 {% extends "base.html" %}
+
 {% block title %}Cooks{% endblock %}
 
 {% block content %}
 <div class="d-flex align-items-center justify-content-between mb-3">
   <h1 class="h3 mb-0">Cooks</h1>
-  <a class="btn btn-primary" href="{% url 'kitchen:cook-create' %}">Create cook</a>
 </div>
-
-<form method="get" class="mb-3">
-  {{ form.search }}
-</form>
 
 <div class="card shadow-sm">
   <div class="table-responsive">
@@ -25,12 +21,13 @@
       <tbody>
       {% for cook in cook_list %}
         <tr>
-          <td><a href="{% url 'kitchen:cook-detail' cook.id %}">{{ cook.username }}</a></td>
+          <td>
+            <a href="{% url 'accounts:cook-detail' cook.id %}">{{ cook.username }}</a>
+          </td>
           <td>{{ cook.first_name }} {{ cook.last_name }}</td>
           <td>{{ cook.years_of_experience }} years</td>
           <td class="text-end">
-            <a class="btn btn-sm btn-outline-primary" href="{% url 'kitchen:cook-update' cook.id %}">Edit</a>
-            <a class="btn btn-sm btn-outline-danger" href="{% url 'kitchen:cook-delete' cook.id %}">Delete</a>
+            <a class="btn btn-sm btn-outline-primary" href="{% url 'accounts:cook-update' cook.id %}">Edit</a>
           </td>
         </tr>
       {% empty %}
