@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.urls import reverse
 
@@ -12,21 +11,6 @@ class DishType(models.Model):
 
     def __str__(self) -> str:
         return self.name
-
-
-class Cook(AbstractUser):
-    years_of_experience = models.PositiveIntegerField(default=0)
-
-    class Meta:
-        verbose_name = "cook"
-        verbose_name_plural = "cooks"
-
-    def __str__(self) -> str:
-        full_name = f"{self.first_name} {self.last_name}".strip()
-        return f"{self.username} ({full_name})" if full_name else self.username
-
-    def get_absolute_url(self):
-        return reverse("kitchen:cook-detail", kwargs={"pk": self.pk})
 
 
 class Ingredient(models.Model):

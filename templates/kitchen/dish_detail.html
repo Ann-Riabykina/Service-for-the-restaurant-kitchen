@@ -28,7 +28,7 @@
         <h2 class="h6">Responsible cooks</h2>
         <ul class="mb-0">
           {% for cook in dish.cooks.all %}
-            <li><a href="{% url 'kitchen:cook-detail' cook.id %}">{{ cook }}</a></li>
+            <li><a href="{% url 'accounts:cook-detail' cook.id %}">{{ cook }}</a></li>
           {% empty %}
             <li>No cooks assigned.</li>
           {% endfor %}

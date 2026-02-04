@@ -1,7 +1,7 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import get_user_model
 
-from .models import Cook, Dish, DishType, Ingredient
+from .models import Dish, DishType, Ingredient
 
 
 class SearchForm(forms.Form):
@@ -16,7 +16,7 @@ class SearchForm(forms.Form):
 
 class DishForm(forms.ModelForm):
     cooks = forms.ModelMultipleChoiceField(
-        queryset=Cook.objects.all(),
+        queryset=get_user_model().objects.all(),
         required=False,
         widget=forms.CheckboxSelectMultiple,
     )
@@ -29,23 +29,6 @@ class DishForm(forms.ModelForm):
     class Meta:
         model = Dish
         fields = "__all__"
-
-
-class CookCreationForm(UserCreationForm):
-    class Meta(UserCreationForm.Meta):
-        model = Cook
-        fields = UserCreationForm.Meta.fields + (
-            "first_name",
-            "last_name",
-            "email",
-            "years_of_experience",
-        )
-
-
-class CookUpdateForm(forms.ModelForm):
-    class Meta:
-        model = Cook
-        fields = ["first_name", "last_name", "email", "years_of_experience"]
 
 
 class DishTypeForm(forms.ModelForm):
